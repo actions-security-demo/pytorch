@@ -12,6 +12,11 @@ jobs:
     outputs:
       conclusion: ${{ fromJson(steps.get-conclusion.outputs.data).conclusion }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Get workflow run conclusion
         # TODO (huydhn): Pin this once https://github.com/octokit/request-action/issues/315 is resolved
         uses: octokit/request-action@main
@@ -31,6 +36,11 @@ jobs:
       id-token: write
     name: Upload dynamo performance stats for ${{ github.event.workflow_run.id }}, attempt ${{ github.event.workflow_run.run_attempt }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout PyTorch
         uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
         with:

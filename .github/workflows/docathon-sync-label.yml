@@ -5,6 +5,9 @@ on:
     types: [opened, synchronize, edited]
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   check-labels:
     if: github.repository_owner == 'pytorch'
@@ -13,6 +16,11 @@ jobs:
       issues: write
       pull-requests: write
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Check out the repo
         uses: actions/checkout@v4
         with:

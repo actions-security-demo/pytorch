@@ -98,6 +98,11 @@ jobs:
     # Only run this on pull requests. This check is simple enough to be done without a Docker image
     if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'skip-pr-sanity-checks')
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout PyTorch
         uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
         with:
@@ -201,6 +206,11 @@ jobs:
     if: ${{ github.repository == 'pytorch/pytorch' }}
     runs-on: linux.24_04.4x
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout PyTorch
         uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
         with:
@@ -240,6 +250,11 @@ jobs:
     steps:
       # [see note: pytorch repo ref]
       # deep clone (fetch-depth 0) required, to allow us to use git log
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout PyTorch
         uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
         with:

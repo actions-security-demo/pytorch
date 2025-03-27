@@ -61,6 +61,11 @@ jobs:
       NUM_TEST_SHARDS: ${{ matrix.num_shards }}
       PR_BODY: ${{ github.event.pull_request.body }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Print runner OS/HW info
         run: |
           sysctl machdep.cpu.brand_string kern.osproductversion

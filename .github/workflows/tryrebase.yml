@@ -4,6 +4,9 @@ on:
   repository_dispatch:
     types: [try-rebase]
 
+permissions:
+  contents: read
+
 jobs:
   do_rebase:
     runs-on: ubuntu-24.04
@@ -11,6 +14,11 @@ jobs:
     env:
         GH_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout repo
         id: checkout
         uses: actions/checkout@v4

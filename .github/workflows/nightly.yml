@@ -77,6 +77,11 @@ jobs:
     # Allow this to be triggered on either a schedule or on workflow_dispatch to allow for easier testing
     if: github.repository_owner == 'pytorch' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: "${{ matrix.repo-owner }}/${{ matrix.repo-name }} update-commit-hash"
         uses: pytorch/test-infra/.github/actions/update-commit-hash@main
         with:

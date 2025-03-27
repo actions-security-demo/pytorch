@@ -40,6 +40,11 @@ jobs:
       ci-no-td: ${{ steps.filter.outputs.ci-no-td }}
       reenabled-issues: ${{ steps.filter.outputs.reenabled-issues }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout PyTorch
         uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
         with:
@@ -61,6 +66,11 @@ jobs:
       fail-fast: false
     runs-on: ${{ matrix.runner }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Print runner OS/HW info
         run: |
           sysctl machdep.cpu.brand_string kern.osproductversion

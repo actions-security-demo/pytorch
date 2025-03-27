@@ -15,6 +15,11 @@ jobs:
     outputs:
       conclusion: ${{ fromJson(steps.get_conclusion.outputs.data).conclusion }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Get workflow run conclusion
         # TODO (huydhn): Pin this once https://github.com/octokit/request-action/issues/315 is resolved
         uses: octokit/request-action@main
@@ -33,6 +38,11 @@ jobs:
       id-token: write
     name: Upload test stats for ${{ github.event.workflow_run.id }}, attempt ${{ github.event.workflow_run.run_attempt }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Print workflow information
         env:
           TRIGGERING_WORKFLOW: ${{ toJSON(github.event.workflow_run) }}
@@ -110,6 +120,11 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Get our GITHUB_TOKEN API limit usage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

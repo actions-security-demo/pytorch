@@ -9,6 +9,9 @@ concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: false
 
+permissions:
+  contents: read
+
 jobs:
   do_update_viablestrict:
     permissions:
@@ -17,6 +20,11 @@ jobs:
     runs-on: ubuntu-24.04
     environment: ${{ (github.event_name == 'schedule') && 'mergebot' || '' }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Update viable/strict
         uses: pytorch/test-infra/.github/actions/update-viablestrict@main
         id: update_viablestrict

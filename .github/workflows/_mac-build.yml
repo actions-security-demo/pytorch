@@ -66,6 +66,11 @@ jobs:
       build-outcome: ${{ steps.build.outcome }}
       test-matrix: ${{ steps.filter.outputs.test-matrix }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Clean up disk space before running MacOS workflow
         uses: pytorch/test-infra/.github/actions/check-disk-space@main
 

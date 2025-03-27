@@ -8,6 +8,9 @@ concurrency:
   group: 1
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   update-labels-in-S3:
     runs-on: ubuntu-22.04
@@ -16,6 +19,11 @@ jobs:
       id-token: write
       contents: read
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout PyTorch
         uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
         with:

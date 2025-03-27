@@ -16,6 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: update-commit-hash
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
@@ -36,6 +41,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: update-commit-hash
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout repo
         uses: actions/checkout@v4
         with:

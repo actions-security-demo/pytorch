@@ -62,6 +62,11 @@ jobs:
       # TODO: Remove the hardcoded step below
       # Hardcoding below is temporary for testing ALI runners
       # This file below should match the script found in .github/scripts/runner_determinator.py
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Hardcode runner-determinator script
         id: hardcode-script
         run: |
