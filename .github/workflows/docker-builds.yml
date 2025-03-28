@@ -99,25 +99,25 @@ jobs:
       # [see note: pytorch repo ref]
       # deep clone (fetch-depth 0) required for git merge-base
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@d4da0e955e5a29942d631cddaf0fb7805bb27231 # main
 
       - name: Setup Linux
         uses: ./.github/actions/setup-linux
 
       - name: Build docker image
         id: build-docker-image
-        uses: pytorch/test-infra/.github/actions/calculate-docker-image@main
+        uses: pytorch/test-infra/.github/actions/calculate-docker-image@ec6b0eeb719d2c47acdec5d9951e0d3b17eecb97 # main
         with:
           docker-image-name: ${{ matrix.docker-image-name }}
           always-rebuild: true
           push: true
 
       - name: Pull docker image
-        uses: pytorch/test-infra/.github/actions/pull-docker-image@main
+        uses: pytorch/test-infra/.github/actions/pull-docker-image@ec6b0eeb719d2c47acdec5d9951e0d3b17eecb97 # main
         with:
           docker-image: ${{ steps.build-docker-image.outputs.docker-image }}
 
-      - uses: nick-fields/retry@v3.0.0
+      - uses: nick-fields/retry@7152eba30c6575329ac0576536151aca5a72780e # v3.0.0
         name: Push to https://https://ghcr.io/
         id: push-to-ghcr-io
         if: ${{ github.event_name == 'push' }}
@@ -145,5 +145,5 @@ jobs:
         if: always()
 
       - name: Teardown Linux
-        uses: pytorch/test-infra/.github/actions/teardown-linux@main
+        uses: pytorch/test-infra/.github/actions/teardown-linux@ec6b0eeb719d2c47acdec5d9951e0d3b17eecb97 # main
         if: always()
