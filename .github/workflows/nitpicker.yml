@@ -9,6 +9,9 @@ on:
     types: [opened, reopened]
     branches: [gh/**/base]
 
+permissions:
+  contents: read
+
 jobs:
   triage:
     permissions:
