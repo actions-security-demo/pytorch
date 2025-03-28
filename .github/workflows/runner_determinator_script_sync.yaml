@@ -9,6 +9,9 @@ on:
       - .github/workflows/_runner_determinator_script_sync.yaml
       - .github/workflows/scripts/runner_determinator.py
 
+permissions:
+  contents: read
+
 jobs:
   python-script-sync-check:
     if: github.repository_owner == 'pytorch'

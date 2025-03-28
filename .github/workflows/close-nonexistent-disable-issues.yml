@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: 5 22 * * 5  # this should be about 3PM PT on Friday
 
+permissions:
+  contents: read
+
 jobs:
   close-nonexistent-disable-issues:
     environment: rockset-read-only
@@ -13,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@d5a8bd068821ca0cd036400c13a561452d391b15 # main
         with:
           submodules: false
           fetch-depth: 1

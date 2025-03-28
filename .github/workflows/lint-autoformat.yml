@@ -6,6 +6,9 @@ on:
     tags:
       - ciflow/autoformat/*
 
+permissions:
+  contents: read
+
 jobs:
   lintrunner-autoformat:
     permissions:
