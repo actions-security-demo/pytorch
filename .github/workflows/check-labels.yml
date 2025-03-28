@@ -38,13 +38,13 @@ jobs:
     runs-on: linux.24_04.4x
     steps:
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@266bd22b443ed5394c9d5965eac62dd6763c19a9 # main
         with:
           submodules: false
           fetch-depth: 1
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
           python-version: '3.9'
           architecture: x64
