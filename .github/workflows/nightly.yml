@@ -78,7 +78,7 @@ jobs:
     if: github.repository_owner == 'pytorch' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
     steps:
       - name: "${{ matrix.repo-owner }}/${{ matrix.repo-name }} update-commit-hash"
-        uses: pytorch/test-infra/.github/actions/update-commit-hash@main
+        uses: pytorch/test-infra/.github/actions/update-commit-hash@1f165828f42a1e631b7a7e6b006b1076d332bd5f # main
         with:
           repo-owner: ${{ matrix.repo-owner }}
           repo-name: ${{ matrix.repo-name }}

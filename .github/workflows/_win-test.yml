@@ -66,10 +66,10 @@ jobs:
           git config --global core.fsmonitor false
 
       - name: Clean up leftover processes on non-ephemeral Windows runner
-        uses: pytorch/test-infra/.github/actions/cleanup-runner@main
+        uses: pytorch/test-infra/.github/actions/cleanup-runner@1f165828f42a1e631b7a7e6b006b1076d332bd5f # main
 
       - name: Setup SSH (Click me for login details)
-        uses: pytorch/test-infra/.github/actions/setup-ssh@main
+        uses: pytorch/test-infra/.github/actions/setup-ssh@1f165828f42a1e631b7a7e6b006b1076d332bd5f # main
         with:
           github-secret: ${{ secrets.GITHUB_TOKEN }}
           instructions: |
@@ -85,7 +85,7 @@ jobs:
 
       # [see note: pytorch repo ref]
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@d5a8bd068821ca0cd036400c13a561452d391b15 # main
         with:
           no-sudo: true
 
@@ -96,7 +96,7 @@ jobs:
 
       # TODO: Move to a requirements.txt file for windows
       - name: Install pip dependencies
-        uses: nick-fields/retry@v3.0.0
+        uses: nick-fields/retry@7152eba30c6575329ac0576536151aca5a72780e # v3.0.0
         with:
           shell: bash
           timeout_minutes: 5
@@ -117,7 +117,7 @@ jobs:
           echo "monitor-script-pid=${!}" >> "${GITHUB_OUTPUT}"
 
       - name: Download PyTorch Build Artifacts
-        uses: seemethere/download-artifact-s3@v4
+        uses: seemethere/download-artifact-s3@1da556a7aa0a088e3153970611f6c432d58e80e6 # v4.2.0
         with:
           name: ${{ inputs.build-environment }}
           path: C:\${{ github.run_id }}\build-results

@@ -8,6 +8,9 @@ concurrency:
   group: 1
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   update-labels-in-S3:
     runs-on: ubuntu-22.04
@@ -17,13 +20,13 @@ jobs:
       contents: read
     steps:
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@d5a8bd068821ca0cd036400c13a561452d391b15 # main
         with:
           fetch-depth: 1
           submodules: false
       - name: configure aws credentials
         id: aws_creds
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         with:
           role-to-assume: arn:aws:iam::308535385114:role/gha_workflow_update_pytorch_labels
           aws-region: us-east-1

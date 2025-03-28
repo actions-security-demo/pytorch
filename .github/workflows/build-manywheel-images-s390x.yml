@@ -41,7 +41,7 @@ jobs:
       GPU_ARCH_TYPE: cpu-s390x
     steps:
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@d5a8bd068821ca0cd036400c13a561452d391b15 # main
         with:
           submodules: false
           no-sudo: true
