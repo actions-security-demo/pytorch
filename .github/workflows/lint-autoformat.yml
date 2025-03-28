@@ -6,6 +6,9 @@ on:
     tags:
       - ciflow/autoformat/*
 
+permissions:
+  contents: read
+
 jobs:
   lintrunner-autoformat:
     permissions:
@@ -14,6 +17,11 @@ jobs:
     runs-on: lf.linux.2xlarge
     if: ${{ github.repository_owner == 'pytorch' && github.event.pull_request.user.login != 'ezyang' && github.event.pull_request.user.login != 'malfet' && !startsWith(github.head_ref, 'export-') }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout pytorch
         uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
         with:

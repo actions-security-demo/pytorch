@@ -9,12 +9,20 @@ on:
       - .github/workflows/_runner_determinator_script_sync.yaml
       - .github/workflows/scripts/runner_determinator.py
 
+permissions:
+  contents: read
+
 jobs:
   python-script-sync-check:
     if: github.repository_owner == 'pytorch'
     runs-on: ubuntu-latest
 
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |

@@ -99,6 +99,11 @@ jobs:
       SHA1: ${{ github.event.pull_request.head.sha || github.sha }}
       USE_SPLIT_BUILD: ${{ inputs.use_split_build }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Make the env permanent during this workflow (but not the secrets)
         shell: bash
         run: |

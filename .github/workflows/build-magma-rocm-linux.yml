@@ -26,6 +26,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}-${{ github.event_name == 'workflow_dispatch' }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build-linux-magma-rocm:
     if: github.repository_owner == 'pytorch'
@@ -36,6 +39,11 @@ jobs:
       matrix:
         rocm_version: ["63", "624"]
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout PyTorch
         uses: actions/checkout@v4
       - name: Build Magma Rocm

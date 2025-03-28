@@ -72,6 +72,11 @@ jobs:
         shell: bash
     steps:
       # Duplicated in win-test because this MUST go before a checkout
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Enable git long paths and symlinks on Windows and disable fsmonitor daemon
         shell: bash
         run: |

@@ -16,6 +16,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}-${{ github.event_name == 'workflow_dispatch' }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build-windows-magma:
     if: github.repository_owner == 'pytorch'
@@ -28,6 +31,11 @@ jobs:
       CUDA_VERSION: ${{ matrix.cuda_version }}
       CONFIG: ${{ matrix.config }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout pytorch/pytorch
         uses: actions/checkout@v4
       - name: Enable MSVC dev commands to enable cl.exe  # FYI incompatible with shell: bash
@@ -48,6 +56,11 @@ jobs:
       id-token: write
     needs: build-windows-magma
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout PyTorch
         uses: actions/checkout@v4
       - name: Download all artifacts

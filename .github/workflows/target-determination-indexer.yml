@@ -25,6 +25,11 @@ jobs:
     runs-on: "${{ needs.get-label-type.outputs.label-type }}linux.g5.4xlarge.nvidia.gpu" # 1 GPU A10G 24GB each
     environment: target-determinator-env
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Clone PyTorch
         uses: actions/checkout@v4
         with:

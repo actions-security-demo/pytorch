@@ -3,6 +3,9 @@ name: Auto Request Review
 on:
   pull_request:
     types: [opened, ready_for_review]
+permissions:
+  contents: read
+
 jobs:
   auto-request-review:
     # Don't run on forked repos
@@ -13,6 +16,11 @@ jobs:
     name: Auto Request Review
     runs-on: ubuntu-latest
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Request review based on files changes and/or groups the author belongs to
         # v0.7.0
         uses: necojackarc/auto-request-review@e08cdffa277d50854744de3f76230260e61c67f4

@@ -4,6 +4,9 @@ on:
   repository_dispatch:
     types: [try-revert]
 
+permissions:
+  contents: read
+
 jobs:
   do_revert:
     name: try_revert_pr_${{ github.event.client_payload.pr_num }}
@@ -12,6 +15,11 @@ jobs:
     env:
         GH_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Checkout repo
         uses: actions/checkout@v4
         id: checkout

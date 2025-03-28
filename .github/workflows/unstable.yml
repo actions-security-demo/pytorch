@@ -21,6 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - name: Introduce PyTorch unstable workflow
         run: |
           echo "PyTorch unstable workflow is used to host experimental or flaky jobs"
