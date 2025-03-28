@@ -4,6 +4,9 @@ on:
   repository_dispatch:
     types: [try-merge]
 
+permissions:
+  contents: read
+
 jobs:
   do_merge:
     name: try_merge_pr_${{ github.event.client_payload.pr_num }}

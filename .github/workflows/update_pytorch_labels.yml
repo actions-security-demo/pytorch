@@ -8,6 +8,9 @@ concurrency:
   group: 1
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   update-labels-in-S3:
     runs-on: ubuntu-22.04
