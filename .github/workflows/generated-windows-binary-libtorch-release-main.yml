@@ -67,7 +67,7 @@ jobs:
           echo "instance-type: $(get_ec2_metadata instance-type)"
           echo "system info $(uname -a)"
       - name: "[FB EMPLOYEES] Enable SSH (Click me for login details)"
-        uses: pytorch/test-infra/.github/actions/setup-ssh@main
+        uses: pytorch/test-infra/.github/actions/setup-ssh@ec6b0eeb719d2c47acdec5d9951e0d3b17eecb97 # main
         continue-on-error: true
         with:
           github-secret: ${{ secrets.GITHUB_TOKEN }}
@@ -106,7 +106,7 @@ jobs:
           echo "PYTORCH_FINAL_PACKAGE_DIR=${RUNNER_TEMP}/artifacts" >> "${GITHUB_ENV}"
           echo "WIN_PACKAGE_WORK_DIR=${RUNNER_TEMP}"
       - name: Checkout PyTorch
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           submodules: recursive
@@ -125,7 +125,7 @@ jobs:
         shell: bash
         run: |
           "${PYTORCH_ROOT}/.circleci/scripts/binary_windows_build.sh"
-      - uses: actions/upload-artifact@v4.4.0
+      - uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
         if: always()
         with:
           name: libtorch-cpu-shared-with-deps-release
@@ -181,7 +181,7 @@ jobs:
           echo "instance-type: $(get_ec2_metadata instance-type)"
           echo "system info $(uname -a)"
       - name: "[FB EMPLOYEES] Enable SSH (Click me for login details)"
-        uses: pytorch/test-infra/.github/actions/setup-ssh@main
+        uses: pytorch/test-infra/.github/actions/setup-ssh@ec6b0eeb719d2c47acdec5d9951e0d3b17eecb97 # main
         continue-on-error: true
         with:
           github-secret: ${{ secrets.GITHUB_TOKEN }}
@@ -219,13 +219,13 @@ jobs:
           echo "BINARY_ENV_FILE=${RUNNER_TEMP}/env" >> "${GITHUB_ENV}"
           echo "PYTORCH_FINAL_PACKAGE_DIR=${RUNNER_TEMP}/artifacts" >> "${GITHUB_ENV}"
           echo "WIN_PACKAGE_WORK_DIR=${RUNNER_TEMP}"
-      - uses: actions/download-artifact@v4.1.7
+      - uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         name: Download Build Artifacts
         with:
           name: libtorch-cpu-shared-with-deps-release
           path: "${{ env.PYTORCH_FINAL_PACKAGE_DIR }}"
       - name: Checkout PyTorch
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           submodules: recursive

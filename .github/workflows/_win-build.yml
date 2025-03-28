@@ -84,10 +84,10 @@ jobs:
           git config --global core.fsmonitor false
 
       - name: Clean up leftover processes on non-ephemeral Windows runner
-        uses: pytorch/test-infra/.github/actions/cleanup-runner@main
+        uses: pytorch/test-infra/.github/actions/cleanup-runner@ec6b0eeb719d2c47acdec5d9951e0d3b17eecb97 # main
 
       - name: Setup SSH (Click me for login details)
-        uses: pytorch/test-infra/.github/actions/setup-ssh@main
+        uses: pytorch/test-infra/.github/actions/setup-ssh@ec6b0eeb719d2c47acdec5d9951e0d3b17eecb97 # main
         with:
           github-secret: ${{ secrets.GITHUB_TOKEN }}
           instructions: |
@@ -102,7 +102,7 @@ jobs:
 
       # [see note: pytorch repo ref]
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@d4da0e955e5a29942d631cddaf0fb7805bb27231 # main
         with:
           no-sudo: true
 
@@ -173,7 +173,7 @@ jobs:
       # Upload to github so that people can click and download artifacts
       - name: Upload artifacts to s3
         if: steps.build.outcome != 'skipped'
-        uses: seemethere/upload-artifact-s3@v5
+        uses: seemethere/upload-artifact-s3@baba72d0712b404f646cebe0730933554ebce96a # v5.1.0
         with:
           retention-days: 14
           if-no-files-found: error
