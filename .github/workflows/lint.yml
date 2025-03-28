@@ -99,7 +99,7 @@ jobs:
     if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'skip-pr-sanity-checks')
     steps:
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@2f785ab20885cf9e129a4808fd2c28cfe1f6fe78 # main
         with:
           submodules: false
           fetch-depth: -1
@@ -202,12 +202,12 @@ jobs:
     runs-on: linux.24_04.4x
     steps:
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@2f785ab20885cf9e129a4808fd2c28cfe1f6fe78 # main
         with:
           submodules: false
           fetch-depth: 1
       - name: Setup Python 3.9
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
           python-version: '3.9'
           architecture: x64
@@ -241,7 +241,7 @@ jobs:
       # [see note: pytorch repo ref]
       # deep clone (fetch-depth 0) required, to allow us to use git log
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@2f785ab20885cf9e129a4808fd2c28cfe1f6fe78 # main
         with:
           submodules: false
           fetch-depth: 1
@@ -254,7 +254,7 @@ jobs:
           echo "MIN_PYTHON_VERSION=$(python3 .github/scripts/get_ci_variable.py --min-python-version)" >> "${GITHUB_OUTPUT}"
       - name: Setup Old Python version
         if: matrix.test_type == 'older_python_version'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
           python-version: 3.6
           architecture: x64
@@ -264,7 +264,7 @@ jobs:
             **/requirements.txt
       - name: Setup Min Python version
         if: matrix.test_type != 'older_python_version'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
           python-version: ${{ steps.get-min-python-version.outputs.MIN_PYTHON_VERSION }}
           architecture: x64
