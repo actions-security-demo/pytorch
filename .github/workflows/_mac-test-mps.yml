@@ -41,7 +41,7 @@ jobs:
       reenabled-issues: ${{ steps.filter.outputs.reenabled-issues }}
     steps:
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@3140565db6f9398c3c58351569945c1bd8d049ec # main
         with:
           submodules: false
 
@@ -66,7 +66,7 @@ jobs:
           sysctl machdep.cpu.brand_string kern.osproductversion
 
       - name: Checkout PyTorch
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           show-progress: false
@@ -82,7 +82,7 @@ jobs:
           use-gha: true
 
       - name: Setup miniconda
-        uses: pytorch/test-infra/.github/actions/setup-miniconda@main
+        uses: pytorch/test-infra/.github/actions/setup-miniconda@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         with:
           python-version: ${{ inputs.python-version }}
           environment-file: .github/requirements/conda-env-${{ runner.os }}-${{ runner.arch }}
@@ -178,4 +178,4 @@ jobs:
       - name: Clean up disk space
         if: always()
         continue-on-error: true
-        uses: pytorch/test-infra/.github/actions/check-disk-space@main
+        uses: pytorch/test-infra/.github/actions/check-disk-space@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
