@@ -16,7 +16,7 @@ jobs:
     runs-on: linux.2xlarge
     steps:
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@3140565db6f9398c3c58351569945c1bd8d049ec # main
         with:
           fetch-depth: 1
           submodules: false
@@ -25,7 +25,7 @@ jobs:
         uses: ./.github/actions/setup-linux
 
       - name: Setup miniconda
-        uses: pytorch/test-infra/.github/actions/setup-miniconda@main
+        uses: pytorch/test-infra/.github/actions/setup-miniconda@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         with:
           python-version: "3.10"
 

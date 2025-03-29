@@ -80,7 +80,7 @@ jobs:
     timeout-minutes: ${{ matrix.mem_leak_check == 'mem_leak_check' && 600 || inputs.timeout-minutes }}
     steps:
       - name: Setup SSH (Click me for login details)
-        uses: pytorch/test-infra/.github/actions/setup-ssh@main
+        uses: pytorch/test-infra/.github/actions/setup-ssh@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         if: ${{ !contains(matrix.runner, 'gcp.a100') && inputs.build-environment != 'linux-s390x-binary-manywheel' }}
         with:
           github-secret: ${{ secrets.GITHUB_TOKEN }}
@@ -89,7 +89,7 @@ jobs:
               docker exec -it $(docker container ps --format '{{.ID}}') bash
 
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@3140565db6f9398c3c58351569945c1bd8d049ec # main
         with:
           no-sudo: true
 
@@ -99,7 +99,7 @@ jobs:
 
       - name: configure aws credentials
         if : ${{ inputs.aws-role-to-assume != '' && inputs.build-environment != 'linux-s390x-binary-manywheel' }}
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         with:
           role-to-assume: ${{ inputs.aws-role-to-assume }}
           role-session-name: gha-linux-test
@@ -107,7 +107,7 @@ jobs:
 
       - name: Calculate docker image
         id: calculate-docker-image
-        uses: pytorch/test-infra/.github/actions/calculate-docker-image@main
+        uses: pytorch/test-infra/.github/actions/calculate-docker-image@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         if: inputs.build-environment != 'linux-s390x-binary-manywheel'
         with:
           docker-image-name: ${{ inputs.docker-image }}
@@ -123,7 +123,7 @@ jobs:
           echo "docker pull ghcr.io/pytorch/ci-image:${tag/:/-}"
 
       - name: Pull docker image
-        uses: pytorch/test-infra/.github/actions/pull-docker-image@main
+        uses: pytorch/test-infra/.github/actions/pull-docker-image@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         if: inputs.build-environment != 'linux-s390x-binary-manywheel'
         with:
           docker-image: ${{ steps.calculate-docker-image.outputs.docker-image }}
@@ -135,7 +135,7 @@ jobs:
 
       - name: Install nvidia driver, nvidia-docker runtime, set GPU_FLAG
         id: install-nvidia-driver
-        uses: pytorch/test-infra/.github/actions/setup-nvidia@main
+        uses: pytorch/test-infra/.github/actions/setup-nvidia@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         if: ${{ contains(inputs.build-environment, 'cuda') && !contains(matrix.config, 'nogpu') && steps.check_container_runner.outputs.IN_CONTAINER_RUNNER == 'false' }}
 
       - name: Setup GPU_FLAG for docker run
@@ -371,7 +371,7 @@ jobs:
           job_identifier: ${{ github.workflow }}_${{ inputs.build-environment }}
 
       - name: Upload the benchmark results
-        uses: pytorch/test-infra/.github/actions/upload-benchmark-results@main
+        uses: pytorch/test-infra/.github/actions/upload-benchmark-results@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         with:
           benchmark-results-dir: test/test-reports
           dry-run: false
@@ -408,7 +408,7 @@ jobs:
           find . -iname "core.[1-9]*" -exec docker exec "${DOCKER_CONTAINER_ID}" sh -c "gdb python {} -ex 'bt' -ex 'q'" \;
 
       - name: Store Core dumps on S3
-        uses: seemethere/upload-artifact-s3@v5
+        uses: seemethere/upload-artifact-s3@baba72d0712b404f646cebe0730933554ebce96a # v5.1.0
         if: failure()
         with:
           name: coredumps-${{ matrix.config }}-${{ matrix.shard }}-${{ matrix.num_shards }}-${{ matrix.runner }}
@@ -428,7 +428,7 @@ jobs:
           workflow_attempt: ${{github.run_attempt}}
 
       - name: Teardown Linux
-        uses: pytorch/test-infra/.github/actions/teardown-linux@main
+        uses: pytorch/test-infra/.github/actions/teardown-linux@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         if: always() && steps.check_container_runner.outputs.IN_CONTAINER_RUNNER == 'false'
 
       # NB: We are currently having an intermittent GPU-related issue on G5 runners with

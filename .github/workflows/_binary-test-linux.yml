@@ -127,14 +127,14 @@ jobs:
 
       - name: "[FB EMPLOYEES] Enable SSH (Click me for login details)"
         if: inputs.build_environment != 'linux-s390x-binary-manywheel'
-        uses: pytorch/test-infra/.github/actions/setup-ssh@main
+        uses: pytorch/test-infra/.github/actions/setup-ssh@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         continue-on-error: true
         with:
           github-secret: ${{ secrets.github-token }}
 
         # Setup the environment
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@3140565db6f9398c3c58351569945c1bd8d049ec # main
         with:
           no-sudo: ${{ inputs.build_environment == 'linux-aarch64-binary-manywheel' || inputs.build_environment == 'linux-s390x-binary-manywheel' }}
 
@@ -155,7 +155,7 @@ jobs:
           mkdir "${GITHUB_WORKSPACE}"
 
       - name: Checkout PyTorch to pytorch dir
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           submodules: recursive
@@ -182,18 +182,18 @@ jobs:
 
       - name: Download Build Artifacts
         if: ${{ steps.filter.outputs.is-test-matrix-empty == 'False' }}
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: ${{ inputs.build_name }}
           path: "${{ runner.temp }}/artifacts/"
 
       - name: Install nvidia driver, nvidia-docker runtime, set GPU_FLAG
-        uses: pytorch/test-infra/.github/actions/setup-nvidia@main
+        uses: pytorch/test-infra/.github/actions/setup-nvidia@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         if: ${{ inputs.GPU_ARCH_TYPE == 'cuda' && steps.filter.outputs.is-test-matrix-empty == 'False' }}
 
       - name: Pull Docker image
         if: ${{ steps.filter.outputs.is-test-matrix-empty == 'False' && inputs.build_environment != 'linux-s390x-binary-manywheel' }}
-        uses: pytorch/test-infra/.github/actions/pull-docker-image@main
+        uses: pytorch/test-infra/.github/actions/pull-docker-image@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         with:
           docker-image: ${{ inputs.DOCKER_IMAGE }}
 
@@ -203,7 +203,7 @@ jobs:
 
       - name: Teardown Linux
         if: always() && inputs.build_environment != 'linux-s390x-binary-manywheel'
-        uses: pytorch/test-infra/.github/actions/teardown-linux@main
+        uses: pytorch/test-infra/.github/actions/teardown-linux@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
 
       - name: Chown workspace
         if: always() && inputs.build_environment != 'linux-s390x-binary-manywheel'

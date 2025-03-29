@@ -85,20 +85,20 @@ jobs:
       USE_SPLIT_BUILD: ${{ inputs.use_split_build }}
     steps:
       - name: Checkout PyTorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@3140565db6f9398c3c58351569945c1bd8d049ec # main
         with:
           no-sudo: true
 
       - name: Configure AWS credentials(PyTorch account) for nightly
         if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/nightly' }}
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         with:
           role-to-assume: arn:aws:iam::749337293305:role/gha_workflow_nightly_build_wheels
           aws-region: us-east-1
 
       - name: Configure AWS credentials(PyTorch account) for RC builds
         if: ${{ github.event_name == 'push' &&  (startsWith(github.event.ref, 'refs/tags/') && !startsWith(github.event.ref, 'refs/tags/ciflow/')) }}
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         with:
           role-to-assume: arn:aws:iam::749337293305:role/gha_workflow_test_build_wheels
           aws-region: us-east-1
@@ -108,7 +108,7 @@ jobs:
         # NB: When the previous build job is skipped, there won't be any artifacts and
         # this step will fail. Binary build jobs can only be skipped on CI, not nightly
         continue-on-error: true
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
         with:
           name: ${{ inputs.build_name }}
           path: "${{ runner.temp }}/artifacts/"

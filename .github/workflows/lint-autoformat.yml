@@ -6,6 +6,9 @@ on:
     tags:
       - ciflow/autoformat/*
 
+permissions:
+  contents: read
+
 jobs:
   lintrunner-autoformat:
     permissions:
@@ -15,12 +18,12 @@ jobs:
     if: ${{ github.repository_owner == 'pytorch' && github.event.pull_request.user.login != 'ezyang' && github.event.pull_request.user.login != 'malfet' && !startsWith(github.head_ref, 'export-') }}
     steps:
       - name: Checkout pytorch
-        uses: pytorch/pytorch/.github/actions/checkout-pytorch@main
+        uses: pytorch/pytorch/.github/actions/checkout-pytorch@3140565db6f9398c3c58351569945c1bd8d049ec # main
         with:
           submodules: true
           fetch-depth: 0
       - name: Setup miniconda
-        uses: pytorch/test-infra/.github/actions/setup-miniconda@main
+        uses: pytorch/test-infra/.github/actions/setup-miniconda@504b6c4cc9f389e63f1d1a07be62288d0e2773d9 # main
         with:
           python-version: "3.10"
       - name: Run lintrunner (nonretryable)
@@ -37,7 +40,7 @@ jobs:
       - name: Suggest changes
         if: steps.git-check.outputs.changes == 'true'
         continue-on-error: true
-        uses: parkerbxyz/suggest-changes@v1
+        uses: parkerbxyz/suggest-changes@a2ec1653b0c4cc8287d682f0066dba4a173cc7f3 # v1.0.8
         with:
           comment: "Please commit the suggested changes from pytorch's linter."
 
