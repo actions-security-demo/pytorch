@@ -4,6 +4,9 @@ on:
   repository_dispatch:
     types: [try-merge]
 
+permissions:
+  contents: read
+
 jobs:
   do_merge:
     name: try_merge_pr_${{ github.event.client_payload.pr_num }}
@@ -16,13 +19,13 @@ jobs:
     steps:
       - name: Checkout repo
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
           token: ${{ secrets.MERGEBOT_TOKEN }}
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
           python-version: '3.9'
           check-latest: false
@@ -87,7 +90,7 @@ jobs:
           python3 .github/scripts/comment_on_pr.py "${PR_NUM}" "merge"
 
       - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         continue-on-error: true
         with:
           role-to-assume: arn:aws:iam::308535385114:role/upload_to_ossci_raw_job_status
@@ -96,7 +99,7 @@ jobs:
       - name: Upload merge record to s3
         if: always()
         continue-on-error: true
-        uses: seemethere/upload-artifact-s3@v5
+        uses: seemethere/upload-artifact-s3@baba72d0712b404f646cebe0730933554ebce96a # v5.1.0
         with:
           s3-bucket: ossci-raw-job-status
           s3-prefix: merges/${{ github.repository }}/${{ github.event.client_payload.pr_num }}/${{ github.event.client_payload.comment_id }}/${{ github.run_id }}
