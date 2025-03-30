@@ -29,6 +29,9 @@ concurrency:
   group: macos-arm64-binary-libtorch-release-${{ github.event.pull_request.number || github.ref_name }}-${{ github.ref_type == 'branch' && github.sha }}-${{ github.event_name == 'workflow_dispatch' }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   libtorch-cpu-shared-with-deps-release-build:
     if: ${{ github.repository_owner == 'pytorch' }}
@@ -73,7 +76,7 @@ jobs:
             echo "DEVELOPER_DIR=/Applications/Xcode_13.3.1.app/Contents/Developer" >> "${GITHUB_ENV}"
           fi
       - name: Checkout PyTorch
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           submodules: recursive
@@ -106,7 +109,7 @@ jobs:
           export USE_COREML_DELEGATE
           export TORCH_PACKAGE_NAME
           "${PYTORCH_ROOT}/.ci/wheel/build_wheel.sh"
-      - uses: actions/upload-artifact@v4.4.0
+      - uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
         if: always()
         with:
           name: libtorch-cpu-shared-with-deps-release

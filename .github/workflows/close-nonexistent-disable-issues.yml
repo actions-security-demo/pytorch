@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: 5 22 * * 5  # this should be about 3PM PT on Friday
 
+permissions:
+  contents: read
+
 jobs:
   close-nonexistent-disable-issues:
     environment: rockset-read-only
